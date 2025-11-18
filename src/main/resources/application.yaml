@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: sb4
+
+#  mvc:
+#    apiversion:
+#      use:
+#        # Ex: api/v1/resource
+#        path-segment: 1
+#
+#        # Ex: X-API-VERSION: 1.0
+#        header: X-API-VERSION
+#
+#        # Ex: ?version=1.0
+#        query-parameter: version
+#
+#        # Ex: Accept: application/json;version=1.0
+#        media-type-parameter:
+#          application/json: version
+#      supported: 1.0,2.0
+#      default: 1.0

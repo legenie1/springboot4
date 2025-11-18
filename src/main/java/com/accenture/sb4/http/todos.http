@@ -1,0 +1,52 @@
+### Todo API - Spring Boot 4 with RestClient
+@baseUrl = http://localhost:8080/api/todos
+
+### GET all todos
+GET {{baseUrl}}
+
+### GET todo by ID
+GET {{baseUrl}}/1
+
+### GET todos by user ID
+GET {{baseUrl}}/user/1
+
+### GET completed todos
+GET {{baseUrl}}/completed
+
+### GET incomplete todos
+GET {{baseUrl}}/incomplete
+
+### CREATE new todo
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "title": "Learn Spring Boot 4",
+  "completed": false
+}
+
+### UPDATE todo (full)
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "userId": 1,
+  "title": "Updated Todo Title",
+  "completed": true
+}
+
+### PATCH todo (partial)
+PATCH {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+### Toggle todo completion
+POST {{baseUrl}}/1/toggle
+
+### DELETE todo
+DELETE {{baseUrl}}/1

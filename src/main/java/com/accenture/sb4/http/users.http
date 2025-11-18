@@ -1,0 +1,56 @@
+### Spring Framework 7 API Versioning Examples
+### All requests for testing different versioning approaches
+
+###
+# Path Segment Versioning
+# Returns List<User> - full entity with all fields
+# Note: Requires usePathSegment(1) to be uncommented in WebConfig
+
+### v1 - Path Segment
+GET http://localhost:8080/api/v1/users
+
+### v2 - Path Segment
+GET http://localhost:8080/api/v2/users
+
+###
+# Request Header Versioning
+# v1 returns List<UserDTOv1>, v2 returns List<UserDTOv2>
+# Note: Requires useRequestHeader("X-API-Version") to be uncommented in WebConfig
+
+### v1 - Request Header
+GET http://localhost:8080/api/users
+X-API-Version: 1.0
+
+### v2 - Request Header
+GET http://localhost:8080/api/users
+X-API-Version: 2.0
+
+###
+# Query Parameter Versioning
+# v1 returns List<UserDTOv1>, v2 returns List<UserDTOv2>
+# Note: Requires useQueryParam("version") to be uncommented in WebConfig
+
+### v1 - Query Parameter
+GET http://localhost:8080/api/users/list?version=1.0
+
+### v2 - Query Parameter
+GET http://localhost:8080/api/users/list?version=v2
+
+###
+# Media Type Parameter Versioning
+# v1 returns List<UserDTOv1>, v2 returns List<UserDTOv2>
+# Note: Currently active in WebConfig with useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")
+
+### v1 - Media Type Parameter
+GET http://localhost:8080/api/users/media
+Accept: application/json;version=1.0
+
+### v2 - Media Type Parameter
+GET http://localhost:8080/api/users/media
+Accept: application/json;version=2.0
+
+###
+# Response Type Differences:
+# - User: Full entity with all fields
+# - UserDTOv1: {id, name, email} - single name field
+# - UserDTOv2: {id, firstName, lastName, email} - separate firstName/lastName fields
