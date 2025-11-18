@@ -81,13 +81,11 @@ public class TodoControllerTests {
             List<Todo> todos = client.get()
                     .uri("/api/todos")
                     .exchange()
-                    // Then: Verify response
                     .expectStatus().isOk()
                     .expectBody(new ParameterizedTypeReference<List<Todo>>() {})
                     .returnResult()
                     .getResponseBody();
 
-            // Assertions
             assertNotNull(todos);
             assertEquals(2, todos.size());
             assertEquals("Learn Spring Boot 4", todos.get(0).title());
@@ -371,10 +369,8 @@ public class TodoControllerTests {
             // EXPLANATION: End-to-end user scenario
             // This simulates exactly what a real client would experience
 
-            // 1. Get all todos
             client.get().uri("/api/todos").exchange().expectStatus().isOk();
 
-            // 2. Create new todo
             Todo newTodo = new Todo(null, 1, "E2E Test", false);
             Todo created = client.post()
                     .uri("/api/todos")
@@ -385,27 +381,21 @@ public class TodoControllerTests {
                     .returnResult()
                     .getResponseBody();
 
-            // 3. Get the created todo
             client.get()
                     .uri("/api/todos/{id}", created.id())
                     .exchange()
                     .expectStatus().isOk();
 
-            // 4. Update it
             client.put()
                     .uri("/api/todos/{id}", created.id())
                     .bodyValue(new Todo(created.id(), 1, "Updated", true))
                     .exchange()
                     .expectStatus().isOk();
 
-            // 5. Delete it
             client.delete()
                     .uri("/api/todos/{id}", created.id())
                     .exchange()
                     .expectStatus().isNoContent();
-
-            // EXPLANATION: Complete CRUD flow over real HTTP
-            // Slowest but most comprehensive
         }
     }
 

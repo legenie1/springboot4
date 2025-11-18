@@ -17,7 +17,7 @@ public class PaymentService {
         return "Payment of $" + amount + " processed successfully";
     }
 
-    @ConcurrencyLimit(limit = 5)
+    @ConcurrencyLimit(value = 5)
     public String checkPaymentStatus(String paymentId) {
         return "Status of payment " + paymentId + ": COMPLETED";
     }
