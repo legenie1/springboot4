@@ -16,6 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
+import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -38,6 +39,8 @@ import static org.mockito.Mockito.when;
  */
 @DisplayName("TodoController Tests - RestTestClient Complete Guide")
 public class TodoControllerTests {
+    public TodoControllerTests(TodoService todoService) {
+    }
 
     // =================================================================
     // APPROACH 1: Unit Testing with bindToController
@@ -54,6 +57,8 @@ public class TodoControllerTests {
         private WebTestClient client;
         private TodoService todoService;
 
+        RestTestClient restTestClient;
+
         @BeforeEach
         void setup() {
             todoService = Mockito.mock(TodoService.class);
@@ -69,15 +74,15 @@ public class TodoControllerTests {
                     new Todo(1, 1, "Learn Spring Boot 4", false)
             );
 
-            // Create RestTestClient bound to controller (no Spring!)
             TodoController controller = new TodoController(todoService);
             client = MockMvcWebTestClient.bindToController(controller).build();
+
+            //  restTestClient = RestTestClient.bindToController(new TodoControllerTests(todoService)).build();
         }
 
         @Test
         @DisplayName("Should get all todos - Pure unit test")
         void shouldGetAllTodos() {
-            // When: Call the API
             List<Todo> todos = client.get()
                     .uri("/api/todos")
                     .exchange()
@@ -111,7 +116,6 @@ public class TodoControllerTests {
                         assertFalse(todo.completed());
                     });
 
-            // EXPLANATION: Same fast performance, testing single item retrieval
         }
 
         @Test
@@ -148,7 +152,7 @@ public class TodoControllerTests {
     // =================================================================
 
     @Nested
-    @DisplayName("2. Spring MVC Tests (bindToMockMvc) - With Validation & Security")
+    @DisplayName("2. Spring MVC Tests (bindToMockMvc) - With Validation & Security: Spring ")
     @WebMvcTest(TodoController.class)
     class SpringMvcTests {
 

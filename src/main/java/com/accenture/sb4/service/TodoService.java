@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 import java.util.List;
 
 @Service
+
 public class TodoService {
     RestClient restClient = RestClient.builder()
             .baseUrl("https://jsonplaceholder.typicode.com")
